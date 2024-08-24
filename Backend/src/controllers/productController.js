@@ -1,6 +1,7 @@
 import Product from '../models/productModel.js';
 import bcrypt from 'bcrypt';
 import QRCode from 'qrcode';
+import bwipjs from 'bwip-js';
 
 // Function to generate a secure password
 const generatePassword = async () => {
@@ -16,15 +17,27 @@ export const createProduct = async (req, res) => {
 
         const product = new Product({ name, description, price, password });
         await product.save();
-        
-        // Generate a QR code for the product URL
+
+        // Generate a Data Matrix code for the product URL
         const productUrl = `http://192.168.55.47:8000/api/products/${product._id}`;
-        const qrCode = await QRCode.toDataURL(productUrl);
-        
-        res.json({ qrCode, productId: product._id });
+        bwipjs.toBuffer({
+            bcid: 'datamatrix',       // Barcode type
+            text: productUrl,         // Text to encode
+            scale: 5,                 // 3x scaling factor
+            height: 20, 
+            includetext: false,       // Show human-readable text
+        }, (err, png) => {
+            if (err) {
+                res.status(500).json({ message: 'Error generating Data Matrix code', error: err });
+            } else {
+                const dataMatrixCode = `data:image/png;base64,${png.toString('base64')}`;
+                res.json({ dataMatrixCode, productId: product._id });
+            }
+        });
     } catch (error) {
         res.status(500).json({ message: 'Error creating product', error });
     }
+
 };
 
 // Get product details by ID and display in a styled HTML page

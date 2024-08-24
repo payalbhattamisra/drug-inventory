@@ -14,8 +14,8 @@ const ProductRegistration = () => {
 
         try {
             const data = await registerProduct(productData);
-            if (data.qrCode) {
-                setQrCode(data.qrCode);
+            if (data.dataMatrixCode) {
+                setQrCode(data.dataMatrixCode);
                 const url = `http://localhost:3000/api/products/${data.productId}`; // Update this URL if necessary
                 setProductUrl(url);
             }
