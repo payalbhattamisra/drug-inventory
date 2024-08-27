@@ -8,14 +8,20 @@ const generatePassword = async () => {
     const salt = await bcrypt.genSalt(10);
     return bcrypt.hash('temporaryPassword', salt); // Generate a hashed password
 };
-
-// Create a new product and generate a QR code
 export const createProduct = async (req, res) => {
     try {
-        const { name, description, price } = req.body;
-        const password = await generatePassword();
+        const { sellerId, manufacturerId, orderDate, orderTotal, orderQuantity, medicines, pincode } = req.body;
 
-        const product = new Product({ name, description, price, password });
+        const product = new Product({
+            sellerId,
+            manufacturerId,
+            orderDate,
+            orderTotal,
+            orderQuantity,
+            medicines,
+            pincode
+        });
+
         await product.save();
 
         // Generate a Data Matrix code for the product URL
@@ -37,21 +43,39 @@ export const createProduct = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Error creating product', error });
     }
-
 };
-
-// Get product details by ID and display in a styled HTML page
+ // Get and display the most recently registered product
 export const getProduct = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id).select('-password');
-        if (product) {
+        // Fetch the most recently created product
+        const latestProduct = await Product.findOne().sort({ createdAt: -1 });
+
+        if (latestProduct) {
+            // Create HTML for the latest product
+            const productHtml = `
+                <div class="product-item">
+                    <h2>Product #${latestProduct._id}</h2>
+                    <p><strong>Seller ID:</strong> ${latestProduct.sellerId}</p>
+                    <p><strong>Manufacturer ID:</strong> ${latestProduct.manufacturerId}</p>
+                    <p><strong>Order Date:</strong> ${new Date(latestProduct.orderDate).toDateString()}</p>
+                    <p><strong>Order Total:</strong> $${latestProduct.orderTotal}</p>
+                    <p><strong>Order Quantity:</strong> ${latestProduct.orderQuantity}</p>
+                    <p><strong>Pincode:</strong> ${latestProduct.pincode}</p>
+                    <p><strong>Medicines:</strong></p>
+                    <ul>
+                        ${latestProduct.medicines.map(med => `<li>${med.name} (Quantity: ${med.quantity})</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            // Send the HTML response
             res.send(`
                 <!DOCTYPE html>
                 <html lang="en">
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Product Details</title>
+                    <title>Latest Product</title>
                     <style>
                         body {
                             font-family: Arial, sans-serif;
@@ -60,7 +84,7 @@ export const getProduct = async (req, res) => {
                             background-color: #f9f9f9;
                         }
                         .product-container {
-                            max-width: 800px;
+                            max-width: 1000px;
                             margin: 50px auto;
                             padding: 20px;
                             background-color: #fff;
@@ -72,32 +96,35 @@ export const getProduct = async (req, res) => {
                             color: #333;
                             margin-bottom: 30px;
                         }
-                        .product-details {
-                            font-size: 18px;
-                            line-height: 1.6;
-                            color: #555;
+                        .product-item {
+                            border-bottom: 1px solid #ddd;
+                            padding: 10px 0;
                         }
-                        .product-details p {
-                            margin: 10px 0;
+                        .product-item:last-child {
+                            border-bottom: none;
+                        }
+                        h2 {
+                            color: #333;
+                        }
+                        p {
+                            margin: 5px 0;
+                            font-size: 18px;
+                            color: #555;
                         }
                     </style>
                 </head>
                 <body>
                     <div class="product-container">
-                        <h1>Product Details</h1>
-                        <div class="product-details">
-                            <p><strong>Product Name:</strong> ${product.name}</p>
-                            <p><strong>Description:</strong> ${product.description}</p>
-                            <p><strong>Price:</strong> $${product.price}</p>
-                        </div>
+                        <h1>Latest Product</h1>
+                        ${productHtml}
                     </div>
                 </body>
                 </html>
             `);
         } else {
-            res.status(404).send('Product not found');
+            res.status(404).send('No products found');
         }
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching product', error });
+        res.status(500).json({ message: 'Error fetching latest product', error });
     }
 };
