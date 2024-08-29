@@ -10,14 +10,14 @@ const generatePassword = async () => {
 };
 export const createProduct = async (req, res) => {
     try {
-        const { sellerId, manufacturerId, orderDate, orderTotal, orderQuantity, medicines, pincode } = req.body;
+        const { sellerId, sellerName, manufacturerId, manufacturerName, orderDate, medicines, pincode } = req.body;
 
         const product = new Product({
             sellerId,
+            sellerName,
             manufacturerId,
+            manufacturerName,
             orderDate,
-            orderTotal,
-            orderQuantity,
             medicines,
             pincode
         });
@@ -45,7 +45,7 @@ export const createProduct = async (req, res) => {
     }
 };
  // Get and display the most recently registered product
-export const getProduct = async (req, res) => {
+ export const getProduct = async (req, res) => {
     try {
         // Fetch the most recently created product
         const latestProduct = await Product.findOne().sort({ createdAt: -1 });
@@ -56,14 +56,18 @@ export const getProduct = async (req, res) => {
                 <div class="product-item">
                     <h2>Product #${latestProduct._id}</h2>
                     <p><strong>Seller ID:</strong> ${latestProduct.sellerId}</p>
+                    <p><strong>Seller Name:</strong> ${latestProduct.sellerName}</p>
                     <p><strong>Manufacturer ID:</strong> ${latestProduct.manufacturerId}</p>
+                    <p><strong>Manufacturer Name:</strong> ${latestProduct.manufacturerName}</p>
                     <p><strong>Order Date:</strong> ${new Date(latestProduct.orderDate).toDateString()}</p>
-                    <p><strong>Order Total:</strong> $${latestProduct.orderTotal}</p>
-                    <p><strong>Order Quantity:</strong> ${latestProduct.orderQuantity}</p>
+                    <p><strong>Order Total:</strong> $${latestProduct.orderTotal.toFixed(2)}</p>
+                    <p><strong>Order Quantity:</strong> ${latestProduct.medicines.reduce((acc, med) => acc + med.quantity, 0)}</p>
                     <p><strong>Pincode:</strong> ${latestProduct.pincode}</p>
                     <p><strong>Medicines:</strong></p>
                     <ul>
-                        ${latestProduct.medicines.map(med => `<li>${med.name} (Quantity: ${med.quantity})</li>`).join('')}
+                        ${latestProduct.medicines.map(med => `
+                            <li>${med.name} - Quantity: ${med.quantity}, Price: $${med.price.toFixed(2)}</li>
+                        `).join('')}
                     </ul>
                 </div>
             `;

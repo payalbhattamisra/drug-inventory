@@ -4,11 +4,12 @@ import { registerProduct } from '../api';
 const ProductRegistration = () => {
     const [products, setProducts] = useState([{
         sellerId: '',
+        sellerName: '',
         manufacturerId: '',
+        manufacturerName: '',
         orderDate: '',
-        orderTotal: '',
-        orderQuantity: '',
-        medicines: [{ name: '', quantity: '' }],
+        orderTotal: 0,
+        medicines: [{ name: '', quantity: '', price: '' }],
         pincode: ''
     }]);
     const [qrCode, setQrCode] = useState('');
@@ -29,10 +30,10 @@ const ProductRegistration = () => {
         };
         setProducts(updatedProducts);
     };
- 
+
     const handleAddMedicine = (index) => {
         const updatedProducts = [...products];
-        updatedProducts[index].medicines.push({ name: '', quantity: '' });
+        updatedProducts[index].medicines.push({ name: '', quantity: '', price: '' });
         setProducts(updatedProducts);
     };
 
@@ -42,16 +43,27 @@ const ProductRegistration = () => {
         setProducts(updatedProducts);
     };
 
+    const calculateOrderTotal = (index) => {
+        const product = products[index];
+        const orderTotal = product.medicines.reduce((total, med) => {
+            return total + (parseFloat(med.price || 0) * parseInt(med.quantity || 0, 10));
+        }, 0);
+        const updatedProducts = [...products];
+        updatedProducts[index].orderTotal = orderTotal.toFixed(2);
+        setProducts(updatedProducts);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             for (const product of products) {
                 const productData = {
                     sellerId: product.sellerId,
+                    sellerName: product.sellerName,
                     manufacturerId: product.manufacturerId,
+                    manufacturerName: product.manufacturerName,
                     orderDate: product.orderDate,
                     orderTotal: parseFloat(product.orderTotal),
-                    orderQuantity: parseInt(product.orderQuantity, 10),
                     medicines: product.medicines,
                     pincode: product.pincode
                 };
@@ -86,12 +98,30 @@ const ProductRegistration = () => {
                             required
                         />
 
+                        <label htmlFor={`sellerName-${index}`}>Seller Name:</label>
+                        <input
+                            type="text"
+                            id={`sellerName-${index}`}
+                            value={product.sellerName}
+                            onChange={(e) => handleProductChange(index, 'sellerName', e.target.value)}
+                            required
+                        />
+
                         <label htmlFor={`manufacturerId-${index}`}>Manufacturer ID:</label>
                         <input
                             type="text"
                             id={`manufacturerId-${index}`}
                             value={product.manufacturerId}
                             onChange={(e) => handleProductChange(index, 'manufacturerId', e.target.value)}
+                            required
+                        />
+
+                        <label htmlFor={`manufacturerName-${index}`}>Manufacturer Name:</label>
+                        <input
+                            type="text"
+                            id={`manufacturerName-${index}`}
+                            value={product.manufacturerName}
+                            onChange={(e) => handleProductChange(index, 'manufacturerName', e.target.value)}
                             required
                         />
 
@@ -109,17 +139,7 @@ const ProductRegistration = () => {
                             type="number"
                             id={`orderTotal-${index}`}
                             value={product.orderTotal}
-                            onChange={(e) => handleProductChange(index, 'orderTotal', e.target.value)}
-                            required
-                        />
-
-                        <label htmlFor={`orderQuantity-${index}`}>Order Quantity:</label>
-                        <input
-                            type="number"
-                            id={`orderQuantity-${index}`}
-                            value={product.orderQuantity}
-                            onChange={(e) => handleProductChange(index, 'orderQuantity', e.target.value)}
-                            required
+                            readOnly
                         />
 
                         <label>Medicines:</label>
@@ -139,6 +159,13 @@ const ProductRegistration = () => {
                                     onChange={(e) => handleMedicineChange(index, medIndex, 'quantity', e.target.value)}
                                     required
                                 />
+                                <input
+                                    type="number"
+                                    placeholder="Price per unit"
+                                    value={medicine.price}
+                                    onChange={(e) => handleMedicineChange(index, medIndex, 'price', e.target.value)}
+                                    required
+                                />
                                 <button type="button" onClick={() => handleRemoveMedicine(index, medIndex)}>
                                     Remove Medicine
                                 </button>
@@ -146,6 +173,10 @@ const ProductRegistration = () => {
                         ))}
                         <button type="button" onClick={() => handleAddMedicine(index)}>
                             + Add Another Medicine
+                        </button>
+
+                        <button type="button" onClick={() => calculateOrderTotal(index)}>
+                            Calculate Order Total
                         </button>
 
                         <label htmlFor={`pincode-${index}`}>Pincode:</label>
@@ -158,7 +189,6 @@ const ProductRegistration = () => {
                         />
                     </div>
                 ))}
- 
 
                 <button type="submit">Register Products</button>
             </form>
