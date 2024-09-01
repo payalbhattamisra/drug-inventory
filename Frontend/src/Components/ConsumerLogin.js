@@ -15,10 +15,29 @@ const ConsumerLogin = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login data submitted:', formData);
-    // Add your login logic here
+    try {
+      const response = await fetch('http://localhost:8000/api/consumer/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+      }
+  
+      const result = await response.json();
+      console.log('Login successful:', result);
+      // Handle successful login (e.g., redirect or store auth token)
+    } catch (error) {
+      console.error('Login error:', error);
+      // Handle login error (e.g., display error message to user)
+    }
   };
 
   return (
