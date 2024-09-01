@@ -17,7 +17,11 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 // Use routes
 app.use('/api', productRoutes);
 
- 
+import manufacturerRoutes from './routes/ManufactureRoutes.js';
+app.use('/api/manufacturers', manufacturerRoutes);
+
+import consumerRoutes from './routes/ConsumerRoutes.js';
+app.use('/api/consumer',consumerRoutes)
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

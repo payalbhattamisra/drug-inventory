@@ -1,0 +1,102 @@
+ /* Container for the login page */
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #218838; /* Dark green background */
+    border: 1px solid #e1e1e1; /* Light grey border for better separation */
+}
+
+/* Header styling */
+h2 {
+    color: #ffffff; /* White text color for contrast */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px; /* Larger font size for emphasis */
+    font-weight: 600; /* Bold weight for emphasis */
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Label styling */
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffffff; /* Light text color for readability */
+}
+
+/* Input styling */
+.form-group input {
+    width: 100%;
+    padding: 12px; /* Slightly larger padding for a better feel */
+    border: 1px solid #cccccc; /* Light grey border */
+    border-radius: 6px; /* Slightly rounded corners */
+    font-size: 16px; /* Larger font size for readability */
+    box-sizing: border-box; /* Ensure padding does not affect width */
+}
+
+/* Button styling */
+.login-btn {
+    display: block;
+    width: 100%;
+    padding: 12px; /* Larger padding for a more substantial button */
+    background-color: #28a745; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 6px; /* Slightly rounded corners */
+    font-size: 16px; /* Consistent font size */
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Button hover effect */
+.login-btn:hover {
+    background-color: #1e7e34; /* Slightly darker green on hover */
+}
+
+/* Paragraph styling */
+p {
+    text-align: center;
+    margin-top: 15px;
+    color: #ffffff; /* Light text color for readability */
+}
+
+/* Link styling within paragraphs */
+p a {
+    color: #007bff; /* Blue link color */
+    text-decoration: none;
+    font-weight: 500; /* Medium weight for better readability */
+}
+
+/* Link hover effect */
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Additional styling for improved layout */
+@media (max-width: 500px) {
+    .login-container {
+        padding: 15px; /* Adjust padding for smaller screens */
+        border-radius: 6px; /* Slightly less rounded corners for small screens */
+    }
+
+    h2 {
+        font-size: 20px; /* Smaller font size for smaller screens */
+    }
+
+    .form-group input {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+
+    .login-btn {
+        padding: 10px; /* Adjust padding for smaller screens */
+        font-size: 14px; /* Slightly smaller font size */
+    }
+}

@@ -7,6 +7,9 @@ import FrontPage from './Components/FrontPage.js';
 import ManufactureSignUp from "./Components/ManufactureSignUp.js";
 import ConsumerSignUp from "./Components/ConsumerSignUp.js";
 import GovtSignUp from "./Components/GovtSignUp.js";
+import ManufacturerLogin from './Components/ManufactureLogin.js';
+import ConsumerLogin from './Components/ConsumerLogin.js';
+
 
 const App = () => {
     return (
@@ -17,6 +20,8 @@ const App = () => {
                 <Route path="/manufacture-signup" element={<ManufactureSignUp/>} />
                 <Route path="/consumer-signup" element={<ConsumerSignUp/>} />
                  <Route path="/govt-signup" element={<GovtSignUp/> } />
+                 <Route path="/manufacture-signup/Login" element={<ManufacturerLogin />} />
+                 <Route path="/consumer-signup/Login" element={<ConsumerLogin />} />
             </Routes>
         </Router>
     );

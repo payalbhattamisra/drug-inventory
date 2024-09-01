@@ -1,7 +1,7 @@
  // src/ManufactureSignUp.jsx
 import React, { useState } from 'react';
 import './ManufactureSignUp.css';
-
+import {Link} from 'react-router-dom';
 const ManufactureSignUp = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -17,11 +17,29 @@ const ManufactureSignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data submitted:', formData);
-    // Add your form submission logic here, such as sending data to an API
-  };
+    try {
+        const response = await fetch('http://localhost:8000/api/manufacturers/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        const result = await response.json();
+        console.log('Manufacturer registered successfully:', result);
+    } catch (error) {
+        console.error('Server error:', error);
+    }
+};
+
 
   return (
     <div className="signup-container">
@@ -72,6 +90,7 @@ const ManufactureSignUp = () => {
           />
         </div>
         <button type="submit" className="submit-btn">Sign Up</button>
+        <p>Already have an account  ?<Link to ="./Login">    Login</Link></p>
       </form>
     </div>
   );
