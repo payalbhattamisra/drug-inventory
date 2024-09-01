@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { registerProduct } from '../api';
-
+import "./ProductRegistration.css"
 const ProductRegistration = () => {
     const [products, setProducts] = useState([{
         sellerId: '',
@@ -82,7 +82,7 @@ const ProductRegistration = () => {
     };
 
     return (
-        <div>
+        <div className='main'>
             <h1>Register Products</h1>
             <form onSubmit={handleSubmit}>
                 {products.map((product, index) => (

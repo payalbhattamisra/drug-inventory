@@ -1,0 +1,71 @@
+ /* src/ManufactureSignUp.css */
+
+.signup-container { 
+    max-width: 400px;
+    margin:50px auto 0px auto;
+    padding: 20px;
+    border: 2px solid #4CAF50; /* Green border */
+    border-radius: 8px;
+    background-color:  #4CAF50; /* White background */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333333; /* Dark text color */
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333333; /* Dark text color */
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 2px solid #4CAF50; /* Green border */
+    border-radius: 4px;
+    background-color: #f9f9f9; /* Light grey background */
+    color: #333333; /* Dark text color */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .form-group input:focus {
+    border-color: #2e7d32; /* Darker green on focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Green shadow */
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50; /* Green button */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #2e7d32; /* Darker green on hover */
+  }
+  
+  .submit-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Green shadow */
+  }
+  
