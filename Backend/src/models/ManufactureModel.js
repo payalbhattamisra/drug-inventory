@@ -6,6 +6,11 @@ const manufacturerSchema = new mongoose.Schema({
         required: [true, 'Manufacturer name is required'],
         trim: true,
     },
+    manufacturerId: {
+        type: String,
+        required: [true, 'Manufacturer ID is required'],
+        trim: true,
+    },
     email: {
         type: String,
         required: [true, 'Email is required'],

@@ -1,0 +1,71 @@
+ /* General Container */
+.dashboard-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .dashboard-container h2 {
+    text-align: center;
+    color: #4caf50;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    color: #4caf50;
+    margin-top: 30px;
+    font-size: 20px;
+  }
+  
+  /* Form Layout */
+  .dashboard-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Form Group */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #388e3c;
+  }
+  
+  .form-group input.readonly-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    border: 2px solid #4caf50;
+    border-radius: 8px;
+    background-color: #f1f8e9; /* Light green background */
+    cursor: not-allowed; /* Disable cursor to show it’s readonly */
+  }
+  
+  /* Order Box */
+  .order-box {
+    background-color: #e8f5e9; /* Light green background for each order */
+    padding: 15px;
+    border: 2px solid #4caf50;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .order-box .form-group input {
+    background-color: #f9fbe7; /* Very light green for input boxes inside orders */
+  }
+  
+  p {
+    color: #666;
+    font-size: 16px;
+    text-align: center;
+  }
+  

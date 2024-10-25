@@ -9,7 +9,7 @@ import ConsumerSignUp from "./Components/ConsumerSignUp.js";
 import GovtSignUp from "./Components/GovtSignUp.js";
 import ManufacturerLogin from './Components/ManufactureLogin.js';
 import ConsumerLogin from './Components/ConsumerLogin.js';
-
+import ManufactureDashboard from './Components/ManufactureDashboard.js';
 
 const App = () => {
     return (
@@ -22,6 +22,7 @@ const App = () => {
                  <Route path="/govt-signup" element={<GovtSignUp/> } />
                  <Route path="/manufacture-signup/Login" element={<ManufacturerLogin />} />
                  <Route path="/consumer-signup/Login" element={<ConsumerLogin />} />
+                 <Route path="/manufacture-dashboard" element={<ManufactureDashboard/>}/>
             </Routes>
         </Router>
     );

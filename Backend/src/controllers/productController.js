@@ -24,8 +24,8 @@ export const createProduct = async (req, res) => {
 
         await product.save();
 
-        // Generate a Data Matrix code for the product URL
-        const productUrl = `http://192.168.55.47:8000/api/products/${product._id}`;
+        // Generate a Data Matrix code for the product URL 192.168.194.47
+        const productUrl = `http://192.168.194.47:8000/api/products/${product._id}`;
         bwipjs.toBuffer({
             bcid: 'datamatrix',       // Barcode type
             text: productUrl,         // Text to encode

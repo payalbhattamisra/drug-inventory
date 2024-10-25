@@ -1,13 +1,15 @@
  // src/ManufactureSignUp.jsx
 import React, { useState } from 'react';
 import './ManufactureSignUp.css';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 const ManufactureSignUp = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    pincode: ''
+    pincode: '',
+    manufacturerId: ''  // this matches the name in the input now
   });
 
   const handleChange = (e) => {
@@ -38,8 +40,7 @@ const ManufactureSignUp = () => {
     } catch (error) {
         console.error('Server error:', error);
     }
-};
-
+  };
 
   return (
     <div className="signup-container">
@@ -52,6 +53,17 @@ const ManufactureSignUp = () => {
             id="name" 
             name="name" 
             value={formData.name} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="manufacturerId">Manufacture Id</label>
+          <input 
+            type="text" 
+            id="manufacturerId" 
+            name="manufacturerId"  // corrected this to manufacturerId
+            value={formData.manufacturerId} 
             onChange={handleChange} 
             required 
           />
@@ -90,7 +102,7 @@ const ManufactureSignUp = () => {
           />
         </div>
         <button type="submit" className="submit-btn">Sign Up</button>
-        <p>Already have an account  ?<Link to ="./Login">    Login</Link></p>
+        <p>Already have an account? <Link to="./Login">Login</Link></p>
       </form>
     </div>
   );
